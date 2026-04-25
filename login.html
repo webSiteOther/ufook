@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أُفُق | دخول</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #6C3FE8;
+    --secondary: #F7B731;
+    --accent: #FF6B6B;
+    --green: #26de81;
+    --bg: #0D0B1E;
+    --card: #16132E;
+    --card2: #1E1A3A;
+    --text: #F0EEFF;
+    --muted: #8B7FC7;
+    --border: rgba(108,63,232,0.3);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(108,63,232,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -30%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(247,183,49,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  nav {
+    position: fixed; top:0; width:100%; z-index:100;
+    background: rgba(13,11,30,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo {
+    font-size: 1.6rem; font-weight: 900; color: var(--primary);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .logo span { color: var(--secondary); }
+  .nav-links { display:flex; gap:16px; flex-wrap:wrap; }
+  .nav-links a {
+    color: var(--muted); text-decoration:none; font-size:0.85rem;
+    padding: 6px 12px; border-radius: 20px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--text); background: var(--border);
+  }
+  .container {
+    width: 100%; max-width: 440px;
+    padding: 24px 20px;
+    margin-top: 80px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px 32px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    animation: slideUp 0.5s ease;
+  }
+  @keyframes slideUp {
+    from { opacity:0; transform:translateY(30px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  .card-title {
+    font-size: 1.8rem; font-weight: 900;
+    text-align: center;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .card-sub {
+    text-align: center; color: var(--muted); font-size:0.9rem;
+    margin-bottom: 30px;
+  }
+  .tabs {
+    display: flex; background: var(--card2); border-radius: 14px;
+    padding: 4px; margin-bottom: 28px; gap: 4px;
+  }
+  .tab-btn {
+    flex: 1; padding: 10px; border: none; border-radius: 10px;
+    background: transparent; color: var(--muted);
+    cursor: pointer; font-family: 'Tajawal', sans-serif;
+    font-size: 0.95rem; font-weight: 600;
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: var(--primary); color: white;
+    box-shadow: 0 4px 15px rgba(108,63,232,0.4);
+  }
+  .form-group { margin-bottom: 18px; }
+  label { display:block; margin-bottom:6px; font-size:0.85rem; color:var(--muted); font-weight:600; }
+  input {
+    width:100%; padding: 14px 16px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 12px; color: var(--text);
+    font-family: 'Tajawal', sans-serif; font-size: 1rem;
+    outline:none; transition: border 0.2s;
+  }
+  input:focus { border-color: var(--primary); }
+  .role-select {
+    display: flex; gap: 10px; margin-bottom: 20px;
+  }
+  .role-btn {
+    flex:1; padding:12px; border:2px solid var(--border);
+    border-radius:12px; background:var(--card2);
+    color:var(--muted); cursor:pointer;
+    font-family:'Tajawal',sans-serif; font-size:0.85rem;
+    transition: all 0.2s; text-align:center;
+  }
+  .role-btn.selected { border-color:var(--primary); color:var(--text); background:rgba(108,63,232,0.15); }
+  .role-btn .role-icon { font-size:1.4rem; display:block; margin-bottom:4px; }
+  .btn-primary {
+    width:100%; padding: 15px;
+    background: linear-gradient(135deg, var(--primary), #8B5CF6);
+    border:none; border-radius:14px;
+    color:white; font-family:'Tajawal',sans-serif;
+    font-size:1.1rem; font-weight:700;
+    cursor:pointer; transition: all 0.2s;
+    box-shadow: 0 8px 25px rgba(108,63,232,0.4);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(108,63,232,0.5); }
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; }
+  .alert {
+    padding: 12px 16px; border-radius: 10px;
+    margin-bottom: 18px; font-size: 0.9rem;
+    display: none;
+  }
+  .alert.error { background: rgba(255,107,107,0.15); border: 1px solid rgba(255,107,107,0.3); color: var(--accent); }
+  .alert.success { background: rgba(38,222,129,0.15); border: 1px solid rgba(38,222,129,0.3); color: var(--green); }
+  .demo-hint {
+    text-align:center; margin-top: 20px; font-size:0.8rem; color:var(--muted);
+    background: var(--card2); border-radius:10px; padding:12px;
+  }
+  .demo-hint strong { color:var(--secondary); }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">أُ<span>فُق</span></a>
+  <div class="nav-links">
+    <a href="student.html">المواد</a>
+    <a href="progress.html">التقدم</a>
+    <a href="badges.html">الإنجازات</a>
+    <a href="parent.html">ولي الأمر</a>
+    <a href="teacher.html">ملاحظات المعلم</a>
+    <a href="login.html" class="active">دخول</a>
+  </div>
+</nav>
+<div class="container">
+  <div class="card">
+    <div class="card-title">🌟 أُفُق</div>
+    <div class="card-sub">منصتك التعليمية الممتعة</div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('login')">تسجيل الدخول</button>
+      <button class="tab-btn" onclick="switchTab('register')">حساب جديد</button>
+    </div>
+
+    <!-- Login Panel -->
+    <div class="tab-panel active" id="panel-login">
+      <div class="alert error" id="login-error"></div>
+      <div class="alert success" id="login-success"></div>
+      <div class="form-group">
+        <label>اسم المستخدم أو البريد الإلكتروني</label>
+        <input type="text" id="login-username" placeholder="أدخل اسم المستخدم">
+      </div>
+      <div class="form-group">
+        <label>كلمة المرور</label>
+        <input type="password" id="login-password" placeholder="أدخل كلمة المرور">
+      </div>
+      <button class="btn-primary" onclick="doLogin()">🚀 دخول</button>
+      <div class="demo-hint">
+        <strong>حسابات تجريبية:</strong><br>
+        طالب: student1 / 1234 | معلم: teacher1 / 5678<br>
+        ولي أمر: parent1 / abcd
+      </div>
+    </div>
+
+    <!-- Register Panel -->
+    <div class="tab-panel" id="panel-register">
+      <div class="alert error" id="reg-error"></div>
+      <div class="alert success" id="reg-success"></div>
+      <div class="form-group">
+        <label>الاسم الكامل</label>
+        <input type="text" id="reg-name" placeholder="أدخل اسمك الكامل">
+      </div>
+      <div class="form-group">
+        <label>اسم المستخدم</label>
+        <input type="text" id="reg-username" placeholder="اختر اسم مستخدم فريد">
+      </div>
+      <div class="form-group">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="reg-email" placeholder="example@email.com">
+      </div>
+      <div class="form-group">
+        <label>كلمة المرور</label>
+        <input type="password" id="reg-password" placeholder="8 أحرف على الأقل">
+      </div>
+      <label style="display:block;margin-bottom:10px;font-size:0.85rem;color:var(--muted);font-weight:600;">نوع الحساب</label>
+      <div class="role-select">
+        <div class="role-btn selected" data-role="student" onclick="selectRole(this)">
+          <span class="role-icon">🎒</span>طالب
+        </div>
+        <div class="role-btn" data-role="parent" onclick="selectRole(this)">
+          <span class="role-icon">👨‍👩‍👧</span>ولي أمر
+        </div>
+        <div class="role-btn" data-role="teacher" onclick="selectRole(this)">
+          <span class="role-icon">📋</span>معلم
+        </div>
+      </div>
+      <button class="btn-primary" onclick="doRegister()">✨ إنشاء حساب</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const DEMO_USERS = [
+    { username: 'student1', password: '1234', name: 'أحمد محمد', role: 'student', email: 'student1@ufuq.sa' },
+    { username: 'teacher1', password: '5678', name: 'المعلمة سارة', role: 'teacher', email: 'teacher1@ufuq.sa' },
+    { username: 'parent1', password: 'abcd', name: 'ولي الأمر', role: 'parent', email: 'parent1@ufuq.sa' },
+  ];
+
+  function getUsers() {
+    try { return JSON.parse(localStorage.getItem('ufuq_users') || '[]'); } catch(e) { return []; }
+  }
+  function saveUsers(u) { localStorage.setItem('ufuq_users', JSON.stringify(u)); }
+
+  function switchTab(t) {
+    document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (i===0&&t==='login')||(i===1&&t==='register')));
+    document.getElementById('panel-login').classList.toggle('active', t==='login');
+    document.getElementById('panel-register').classList.toggle('active', t==='register');
+  }
+
+  function selectRole(el) {
+    document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function showAlert(id, msg, type) {
+    const el = document.getElementById(id);
+    el.textContent = msg; el.className = 'alert ' + type; el.style.display = 'block';
+    setTimeout(() => el.style.display='none', 4000);
+  }
+
+  function doLogin() {
+    const u = document.getElementById('login-username').value.trim();
+    const p = document.getElementById('login-password').value;
+    if (!u || !p) { showAlert('login-error','يرجى ملء جميع الحقول','error'); return; }
+    const allUsers = [...DEMO_USERS, ...getUsers()];
+    const found = allUsers.find(x => (x.username===u || x.email===u) && x.password===p);
+    if (!found) { showAlert('login-error','اسم المستخدم أو كلمة المرور غير صحيحة','error'); return; }
+    const state = JSON.parse(localStorage.getItem('ufuq_data') || '{}');
+    state.loggedIn = true;
+    state.user = { name: found.name, username: found.username, role: found.role };
+    localStorage.setItem('ufuq_data', JSON.stringify(state));
+    showAlert('login-success', 'مرحباً ' + found.name + '! جارٍ التوجيه...', 'success');
+    setTimeout(() => {
+      if (found.role === 'teacher') location.href = 'teacher.html';
+      else if (found.role === 'parent') location.href = 'parent.html';
+      else location.href = 'student.html';
+    }, 1200);
+  }
+
+  function doRegister() {
+    const name = document.getElementById('reg-name').value.trim();
+    const username = document.getElementById('reg-username').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const password = document.getElementById('reg-password').value;
+    const role = document.querySelector('.role-btn.selected')?.dataset.role || 'student';
+    if (!name||!username||!email||!password) { showAlert('reg-error','يرجى ملء جميع الحقول','error'); return; }
+    if (password.length < 4) { showAlert('reg-error','كلمة المرور قصيرة جداً (4 أحرف على الأقل)','error'); return; }
+    const allUsers = [...DEMO_USERS, ...getUsers()];
+    if (allUsers.find(x => x.username===username)) { showAlert('reg-error','اسم المستخدم مستخدم بالفعل','error'); return; }
+    const users = getUsers();
+    users.push({ name, username, email, password, role });
+    saveUsers(users);
+    showAlert('reg-success', 'تم إنشاء الحساب بنجاح! يمكنك الدخول الآن.', 'success');
+    setTimeout(() => switchTab('login'), 1500);
+  }
+</script>
+</body>
+</html>

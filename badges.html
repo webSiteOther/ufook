@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أُفُق | الإنجازات</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--primary:#6C3FE8;--secondary:#F7B731;--green:#26de81;--cyan:#00D2D3;--accent:#FF6B6B;--bg:#0D0B1E;--card:#16132E;--card2:#1E1A3A;--text:#F0EEFF;--muted:#8B7FC7;--border:rgba(108,63,232,0.3);}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);}
+  nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(13,11,30,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-size:1.6rem;font-weight:900;color:var(--primary);text-decoration:none;}
+  .nav-links{display:flex;gap:6px;flex-wrap:wrap;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;padding:7px 12px;border-radius:20px;transition:all 0.2s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--text);background:rgba(108,63,232,0.2);}
+  .main{padding:90px 24px 60px;max-width:1000px;margin:0 auto;}
+  .page-header{text-align:center;margin-bottom:40px;}
+  .page-header h1{font-size:2.2rem;font-weight:900;margin-bottom:6px;}
+  .page-header p{color:var(--muted);}
+  .badge-summary{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px 28px;margin-bottom:32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+  .badge-count-display{font-size:3rem;font-weight:900;background:linear-gradient(135deg,var(--secondary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .badge-count-label{font-size:0.85rem;color:var(--muted);margin-top:4px;}
+  .progress-ring-wrap{text-align:center;}
+  .ring-text{font-size:0.85rem;color:var(--muted);margin-top:8px;}
+  .overall-bar{flex:1;min-width:200px;}
+  .overall-bar-label{display:flex;justify-content:space-between;font-size:0.8rem;color:var(--muted);margin-bottom:6px;}
+  .overall-bar-track{height:10px;background:var(--card2);border-radius:10px;overflow:hidden;}
+  .overall-bar-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--secondary),var(--accent));transition:width 0.8s;}
+  .badges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px;margin-bottom:32px;}
+  .badge-card{background:var(--card);border:2px solid var(--border);border-radius:22px;padding:28px 20px;text-align:center;transition:all 0.3s;position:relative;overflow:hidden;}
+  .badge-card.unlocked{border-color:var(--secondary);background:linear-gradient(135deg,rgba(247,183,49,0.08),var(--card));}
+  .badge-card.unlocked:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(247,183,49,0.2);}
+  .badge-card.locked{opacity:0.5;filter:grayscale(0.3);}
+  .badge-icon{font-size:2.8rem;margin-bottom:12px;display:block;}
+  .badge-card.locked .badge-icon{filter:grayscale(1);}
+  .badge-name{font-size:1rem;font-weight:800;margin-bottom:6px;}
+  .badge-desc{font-size:0.78rem;color:var(--muted);line-height:1.5;}
+  .badge-status{
+    margin-top:12px;font-size:0.78rem;font-weight:700;
+    padding:5px 14px;border-radius:20px;display:inline-block;
+  }
+  .badge-card.unlocked .badge-status{background:rgba(247,183,49,0.2);color:var(--secondary);}
+  .badge-card.locked .badge-status{background:var(--card2);color:var(--muted);}
+  .badge-date{font-size:0.72rem;color:var(--muted);margin-top:6px;}
+  .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;}
+  .quick-nav{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+  .quick-nav a{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:50px;padding:10px 22px;color:var(--cyan);text-decoration:none;font-size:0.88rem;font-weight:600;transition:all 0.2s;}
+  .quick-nav a:hover{border-color:var(--cyan);transform:translateY(-2px);}
+  .section-title{font-size:1.4rem;font-weight:900;margin-bottom:20px;}
+  @keyframes celebrate{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+  .new-badge-anim{animation:celebrate 0.5s ease;}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">أُفُق</a>
+  <div class="nav-links">
+    <a href="student.html">المواد</a>
+    <a href="progress.html">التقدم</a>
+    <a href="badges.html" class="active">الإنجازات</a>
+    <a href="parent.html">ولي الأمر</a>
+    <a href="teacher.html">ملاحظات المعلم</a>
+    <a href="login.html" id="loginLink">دخول</a>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="page-header">
+    <h1>🏆 معرض الإنجازات</h1>
+    <p>شاراتك المكتسبة وتلك التي تنتظرك — استمر في التعلم لفتح الكل!</p>
+  </div>
+
+  <div class="badge-summary">
+    <div>
+      <div class="badge-count-display" id="unlockedCount">0</div>
+      <div class="badge-count-label">شارة مفتوحة من أصل 8</div>
+    </div>
+    <div class="overall-bar">
+      <div class="overall-bar-label"><span>التقدم نحو اكتمال الإنجازات</span><span id="pctLabel">0%</span></div>
+      <div class="overall-bar-track">
+        <div class="overall-bar-fill" id="badgeBarFill" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title" id="unlockedTitle">🌟 الشارات المفتوحة (0)</div>
+  <div class="badges-grid" id="badgesGrid"></div>
+
+  <div class="quick-nav">
+    <a href="student.html">◀ المواد الدراسية</a>
+    <a href="progress.html">◀ لوحة التقدم</a>
+    <a href="parent.html">◀ متابعة ولي الأمر </a>
+  </div>
+</div>
+
+<script>
+const ALL_BADGES = [
+  {key:'first_step', icon:'🌟', name:'أول خطوة', desc:'أكمل أول نشاط تعليمي على المنصة', how:'اضغط "ابدأ الآن" في أي مادة'},
+  {key:'enthusiast', icon:'🔥', name:'متحمّس', desc:'حافظ على 3 أيام متتالية من النشاط', how:'ادخل للمنصة 3 أيام متتالية'},
+  {key:'diamond', icon:'💎', name:'ماسي', desc:'اجمع 1000 نقطة إجمالية', how:'تراكم النقاط في جميع المواد'},
+  {key:'math_hero', icon:'🏆', name:'بطل الرياضيات', desc:'اجمع 50 نقطة في الرياضيات', how:'أكمل أنشطة الرياضيات'},
+  {key:'reader', icon:'📚', name:'قارئ نهم', desc:'اجمع 50 نقطة في اللغة العربية', how:'أكمل أنشطة اللغة العربية'},
+  {key:'scientist', icon:'🔭', name:'عالم صغير', desc:'اجمع 50 نقطة في العلوم', how:'أكمل أنشطة العلوم'},
+  {key:'quick_mind', icon:'⚡', name:'سريع البديهة', desc:'سجّل 10 إجابات صحيحة', how:'سجّل إجاباتك الصحيحة في صفحة التقدم'},
+  {key:'integrated', icon:'🌈', name:'متكامل', desc:'اكسب نقاطاً في جميع المواد الستة', how:'ابدأ نشاطاً في كل مادة'},
+];
+
+function getState(){try{return JSON.parse(localStorage.getItem('ufuq_data')||'{}')}catch(e){return{}}}
+function getTotal(s){return Object.values(s.points||{}).reduce((a,b)=>a+b,0)}
+function checkBadges(s){
+  const total=getTotal(s);const badges=[];
+  const acts=Object.values(s.activities||{}).reduce((a,b)=>a+b,0);
+  if(acts>=1)badges.push('first_step');
+  if((s.streak||0)>=3)badges.push('enthusiast');
+  if(total>=1000)badges.push('diamond');
+  if((s.points?.math||0)>=50)badges.push('math_hero');
+  if((s.points?.arabic||0)>=50)badges.push('reader');
+  if((s.points?.science||0)>=50)badges.push('scientist');
+  if((s.correctAnswers||0)>=10)badges.push('quick_mind');
+  if(Object.values(s.points||{}).every(p=>p>0))badges.push('integrated');
+  return badges;
+}
+
+const state = getState();
+if(state.user) document.getElementById('loginLink').textContent = '👤 ' + state.user.name;
+
+const earnedKeys = checkBadges(state);
+const unlocked = ALL_BADGES.filter(b => earnedKeys.includes(b.key));
+const locked = ALL_BADGES.filter(b => !earnedKeys.includes(b.key));
+const pct = Math.round(unlocked.length/ALL_BADGES.length*100);
+
+document.getElementById('unlockedCount').textContent = unlocked.length;
+document.getElementById('pctLabel').textContent = pct + '%';
+document.getElementById('badgeBarFill').style.width = pct + '%';
+document.getElementById('unlockedTitle').textContent = `🌟 الشارات المفتوحة (${unlocked.length})`;
+
+let html = '';
+[...unlocked, ...locked].forEach(b => {
+  const isUnlocked = earnedKeys.includes(b.key);
+  html += `
+    <div class="badge-card ${isUnlocked ? 'unlocked' : 'locked'}">
+      <span class="badge-icon">${b.icon}</span>
+      <div class="badge-name">${b.name}</div>
+      <div class="badge-desc">${b.desc}</div>
+      <span class="badge-status">${isUnlocked ? '✅ مفتوح' : '🔒 مقفل'}</span>
+      ${isUnlocked ? '' : `<div class="badge-date" style="margin-top:8px;color:var(--muted);font-size:0.75rem;">كيف تفتحها: ${b.how}</div>`}
+    </div>
+  `;
+});
+document.getElementById('badgesGrid').innerHTML = html;
+</script>
+</body>
+</html>

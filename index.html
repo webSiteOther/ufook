@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أُفُق | منصة تعليمية للأطفال</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #6C3FE8;
+    --secondary: #F7B731;
+    --accent: #FF6B6B;
+    --green: #26de81;
+    --cyan: #00D2D3;
+    --bg: #0D0B1E;
+    --card: #16132E;
+    --card2: #1E1A3A;
+    --text: #F0EEFF;
+    --muted: #8B7FC7;
+    --border: rgba(108,63,232,0.3);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    text-align: center; /* توسيط عام للنصوص */
+  }
+  
+  /* NAV */
+  nav {
+    position: fixed; top:0; width:100%; z-index:100;
+    background: rgba(13,11,30,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .logo {
+    font-size: 2.2rem; /* تم تكبير حجم اللوجو النصي هنا */
+    font-weight: 900; color: var(--primary);
+    text-decoration: none;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .logo-dot { width:15px;height:15px;border-radius:50%;background:var(--secondary);display:inline-block; } /* تم التكبير للتناسق */
+  
+  .nav-links { 
+    display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content: center;
+  }
+  .nav-links a:not(.btn-login) {
+    color: var(--text); text-decoration:none; font-size:0.95rem; font-weight: 500;
+    padding: 8px 16px; border-radius: 20px;
+    transition: all 0.3s ease;
+  }
+  .nav-links a:not(.btn-login):hover { 
+    color: #fff; background: rgba(108,63,232,0.3); transform: translateY(-2px);
+  }
+  
+  /* Login Container (زر الدخول + اللوجو الخارجي) */
+  .login-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-right: 15px;
+    padding-right: 15px;
+    border-right: 1px solid var(--border);
+  }
+  .btn-login {
+    background: linear-gradient(135deg, var(--primary), #8B5CF6); 
+    color:white; padding: 8px 24px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(108,63,232,0.4);
+  }
+  .btn-login:hover { 
+    background: linear-gradient(135deg, #7C4FF8, #9D74F7);
+    transform: translateY(-3px); 
+    box-shadow: 0 8px 20px rgba(108,63,232,0.6);
+  }
+  .external-logo {
+    width: 55px; height: 55px; /* تم تكبير اللوجو الخارجي هنا */
+    border-radius: 50%; 
+    object-fit: cover;
+    border: 2px solid var(--cyan);
+    box-shadow: 0 0 15px rgba(0,210,211,0.4);
+    transition: transform 0.3s ease;
+  }
+  .external-logo:hover {
+    transform: scale(1.1) rotate(5deg);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction:column; align-items:center; justify-content:center;
+    padding: 120px 24px 60px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero > *:not(.hero-bg-scroller) {
+    position: relative;
+    z-index: 2; /* إبقاء العناصر الأساسية فوق شريط الخلفية */
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top:0;left:0;right:0;bottom:0;
+    background: radial-gradient(circle at 50% 30%, rgba(108,63,232,0.2) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-badge {
+    display: inline-flex; align-items:center; gap:8px; justify-content: center;
+    background: rgba(108,63,232,0.15); border: 1px solid rgba(108,63,232,0.4);
+    border-radius: 30px; padding: 10px 24px; margin-bottom: 30px;
+    font-size: 0.9rem; color: #C4B5FD; font-weight: 700;
+    animation: fadeIn 0.6s ease;
+  }
+  .hero-title {
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    animation: fadeIn 0.7s ease 0.1s both;
+  }
+  .hero-title .highlight {
+    background: linear-gradient(135deg, var(--primary), var(--cyan), var(--secondary));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 1.2rem; color: var(--muted); max-width: 650px;
+    line-height: 1.8; margin: 0 auto 40px auto;
+    animation: fadeIn 0.7s ease 0.2s both;
+  }
+  .hero-actions {
+    display: flex; gap: 20px; flex-wrap:wrap; justify-content:center;
+    animation: fadeIn 0.7s ease 0.3s both;
+  }
+  .btn-hero {
+    padding: 18px 40px; border-radius: 50px;
+    font-family:'Tajawal',sans-serif; font-size:1.1rem; font-weight:700;
+    text-decoration:none; cursor:pointer; transition: all 0.3s;
+    border: none; display: inline-flex; align-items:center; justify-content:center; gap:10px;
+  }
+  .btn-hero.primary {
+    background: linear-gradient(135deg, var(--primary), #8B5CF6);
+    color: white;
+    box-shadow: 0 10px 30px rgba(108,63,232,0.4);
+  }
+  .btn-hero.primary:hover { transform:translateY(-5px); box-shadow: 0 15px 40px rgba(108,63,232,0.6); }
+  .btn-hero.secondary {
+    background: rgba(247,183,49,0.1); color: var(--secondary);
+    border: 2px solid var(--secondary);
+  }
+  .btn-hero.secondary:hover { background: rgba(247,183,49,0.2); transform:translateY(-5px); }
+  
+  /* STATS */
+  .stats {
+    display: flex; gap: 50px; justify-content:center; flex-wrap:wrap;
+    margin-top: 70px;
+    animation: fadeIn 0.7s ease 0.4s both;
+  }
+  .stat-item { text-align:center; }
+  .stat-num { font-size: 2.5rem; font-weight:900; color:var(--secondary); text-shadow: 0 0 15px rgba(247,183,49,0.3); }
+  .stat-label { font-size:0.9rem; color:var(--muted); font-weight: 500; margin-top: 5px; }
+
+  /* SCROLLING MARQUEE (الصور المتحركة) */
+  .scrolling-wrapper {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    direction: ltr; /* مهم لاستقرار الأنيميشن */
+  }
+  .scrolling-track {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    width: max-content;
+    animation: scroll 40s linear infinite;
+  }
+  .scrolling-track img {
+    height: 140px;
+    border-radius: 15px;
+    object-fit: contain;
+    background: #fff;
+    padding: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  }
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* تنسيق الشريط الخلفي الشفاف */
+  .hero-bg-scroller {
+    position: absolute;
+    top: 25%;
+    left: 0;
+    z-index: 0;
+    opacity: 0.12; /* نسبة شفافية خفيفة */
+    pointer-events: none; /* لمنع التفاعل معه */
+  }
+  .hero-bg-scroller .scrolling-track img {
+    height: 220px; /* حجم أكبر لأنه في الخلفية */
+    box-shadow: none;
+    border-radius: 20px;
+  }
+
+  /* تنسيق الشريط السفلي */
+  .bottom-scroller {
+    margin-top: 60px;
+    animation: fadeIn 0.8s ease 0.6s both;
+  }
+
+  /* GENERAL SECTIONS */
+  .section {
+    padding: 80px 24px;
+    max-width: 1200px; margin: 0 auto;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .section-title {
+    font-size: 2.5rem; font-weight:900; margin-bottom:16px;
+    text-align:center;
+    background: linear-gradient(135deg, #fff, #C4B5FD);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .section-sub { text-align:center; color:var(--muted); margin-bottom:50px; font-size:1.1rem; max-width: 700px; }
+
+  /* VIDEO SECTION */
+  .video-wrapper {
+    background: var(--card2);
+    border: 2px solid var(--border);
+    border-radius: 30px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    width: 100%; max-width: 900px;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  }
+  .video-placeholder {
+    width:100%;height:100%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background: linear-gradient(135deg, rgba(22,19,46,0.9), rgba(30,26,58,0.9)), url('vid-thumbnail.jpg') center/cover;
+    color: var(--text); gap: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .video-placeholder:hover { background: linear-gradient(135deg, rgba(22,19,46,0.8), rgba(30,26,58,0.8)); }
+  .play-btn {
+    width:85px;height:85px; border-radius:50%;
+    background: linear-gradient(135deg,var(--primary),#8B5CF6);
+    display:flex;align-items:center;justify-content:center;
+    font-size:2.2rem;
+    box-shadow: 0 10px 40px rgba(108,63,232,0.7);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .video-placeholder:hover .play-btn { transform: scale(1.15); }
+
+  /* INTERACTIVE SQUARES SECTION */
+  .interactive-squares-container {
+    width: 100%;
+    padding: 60px 24px;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .interactive-squares {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    max-width: 1000px;
+  }
+  .square-card {
+    background: rgba(30, 26, 58, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(108, 63, 232, 0.4);
+    border-radius: 28px;
+    width: 180px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--text);
+    gap: 15px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+  }
+  .square-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(0, 210, 211, 0.15) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  .square-card:hover {
+    transform: translateY(-12px);
+    border-color: var(--cyan);
+    background: rgba(30, 26, 58, 0.9);
+    box-shadow: 0 20px 45px rgba(0,210,211,0.25);
+  }
+  .square-card:hover::before { opacity: 1; }
+  .square-icon {
+    font-size: 3.5rem;
+    transition: transform 0.4s ease, filter 0.4s ease;
+    filter: drop-shadow(0 0 10px rgba(108,63,232,0.5));
+  }
+  .square-card:hover .square-icon {
+    transform: scale(1.2) translateY(-5px);
+    filter: drop-shadow(0 10px 20px rgba(0,210,211,0.7));
+  }
+  .square-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    z-index: 1;
+    text-align: center;
+  }
+
+  /* ICONS GRID */
+  .icons-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    width: 100%;
+  }
+  .icon-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px; padding: 35px 25px;
+    width: 220px;
+    text-align:center; cursor:pointer;
+    transition: all 0.4s ease;
+    text-decoration: none; color: var(--text);
+    display: flex; flex-direction:column; align-items:center; justify-content: center; gap: 15px;
+  }
+  .icon-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(108,63,232,0.3);
+    background: var(--card2);
+  }
+  .icon-card .icon { font-size: 3rem; margin-bottom: 5px; }
+  .icon-card .icon-name { font-weight:800; font-size:1.1rem; }
+  .icon-card .icon-desc { font-size:0.85rem; color:var(--muted); }
+
+  /* LOGIN SECTION */
+  .login-section {
+    padding: 100px 24px;
+    text-align:center;
+    background: linear-gradient(135deg, rgba(108,63,232,0.05), rgba(247,183,49,0.05));
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: center; align-items: center;
+  }
+  .login-card {
+    width: 100%;
+    max-width:600px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 30px; padding: 60px 40px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .green-badge {
+    display:inline-flex; align-items: center; justify-content: center;
+    background: rgba(38,222,129,0.15);
+    border: 1px solid rgba(38,222,129,0.4);
+    color: var(--green); padding: 8px 20px; border-radius:30px;
+    font-size:0.9rem; font-weight: 700; margin-bottom:24px;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity:0; transform:translateY(30px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  .floating {
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,100% { transform:translateY(0); }
+    50% { transform:translateY(-15px); }
+  }
+  footer {
+    text-align:center; padding: 40px; color:var(--muted); font-size:0.9rem;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">
+    <span class="logo-dot"></span>أُفُق
+  </a>
+  <div class="nav-links">
+    <a href="student.html">المواد الدراسية</a>
+    <a href="progress.html">التقدم</a>
+    <a href="badges.html">الإنجازات</a>
+    <a href="parent.html">متابعة ولي الأمر </a>
+    <a href="teacher.html">ملاحظات المعلم</a>
+    
+    <div class="login-container">
+      <a href="login.html" class="btn-login">🔐 دخول</a>
+      <img src="logo.jpeg" alt="Logo" class="external-logo">
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="scrolling-wrapper hero-bg-scroller">
+    <div class="scrolling-track">
+      <img src="bar (1).jpeg" alt="img1">
+      <img src="bar (2).jpeg" alt="img2">
+      <img src="bar (3).jpeg" alt="img3">
+      <img src="bar (4).jpeg" alt="img4">
+      <img src="bar (5).jpeg" alt="img5">
+      <img src="bar (6).jpeg" alt="img6">
+      <img src="bar (7).jpeg" alt="img7">
+      <img src="bar (8).jpeg" alt="img8">
+      <img src="bar (9).jpeg" alt="img9">
+      <img src="bar (1).jpeg" alt="img1">
+      <img src="bar (2).jpeg" alt="img2">
+      <img src="bar (3).jpeg" alt="img3">
+      <img src="bar (4).jpeg" alt="img4">
+      <img src="bar (5).jpeg" alt="img5">
+      <img src="bar (6).jpeg" alt="img6">
+      <img src="bar (7).jpeg" alt="img7">
+      <img src="bar (8).jpeg" alt="img8">
+      <img src="bar (9).jpeg" alt="img9">
+    </div>
+  </div>
+
+  <div class="hero-badge">🌟 منصة تعليمية مجانية للأطفال</div>
+  <h1 class="hero-title">
+    مرحباً بك في<br>
+    <span class="highlight">أُفُق</span>
+  </h1>
+  <p class="hero-sub">
+    اختر مادتك المفضلة وابدأ رحلتك التعليمية الممتعة مع أنشطة تفاعلية، نقاط وإنجازات تحفّزك على التميز والمنافسة.
+  </p>
+  <div class="hero-actions">
+    <a href="student.html" class="btn-hero primary">🚀 ابدأ التعلم الآن</a>
+    <a href="login.html" class="btn-hero secondary">🔐 تسجيل الدخول</a>
+  </div>
+  
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-num">6+</div>
+      <div class="stat-label">مواد دراسية</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">50+</div>
+      <div class="stat-label">نشاط تفاعلي</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">8</div>
+      <div class="stat-label">إنجاز وشارة</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">إمكانيات التعلم</div>
+    </div>
+  </div>
+
+  <div class="scrolling-wrapper bottom-scroller">
+    <div class="scrolling-track">
+      <img src="bar (1).jpeg" alt="img1">
+      <img src="bar (2).jpeg" alt="img2">
+      <img src="bar (3).jpeg" alt="img3">
+      <img src="bar (4).jpeg" alt="img4">
+      <img src="bar (5).jpeg" alt="img5">
+      <img src="bar (6).jpeg" alt="img6">
+      <img src="bar (7).jpeg" alt="img7">
+      <img src="bar (8).jpeg" alt="img8">
+      <img src="bar (9).jpeg" alt="img9">
+      <img src="bar (1).jpeg" alt="img1">
+      <img src="bar (2).jpeg" alt="img2">
+      <img src="bar (3).jpeg" alt="img3">
+      <img src="bar (4).jpeg" alt="img4">
+      <img src="bar (5).jpeg" alt="img5">
+      <img src="bar (6).jpeg" alt="img6">
+      <img src="bar (7).jpeg" alt="img7">
+      <img src="bar (8).jpeg" alt="img8">
+      <img src="bar (9).jpeg" alt="img9">
+    </div>
+  </div>
+</section>
+
+<div class="section">
+  <h2 class="section-title">🎬 فيديو تعريفي بالمنصة</h2>
+  <p class="section-sub">تعرّف على أُفُق في دقائق قصيرة قبل أن تبدأ رحلتك التعليمية الممتعة واكتشف كيف يمكنك الاستفادة القصوى.</p>
+  <div class="video-wrapper">
+    <div class="video-placeholder" id="videoPlaceholder" onclick="playVideo()">
+      <div class="play-btn floating">▶</div>
+      <p style="font-size:1.3rem;font-weight:800;">اضغط لمشاهدة الفيديو التعريفي</p>
+      <p style="font-size:1rem; opacity: 0.8;">تعرّف على منصة أُفُق وكيفية استخدامها خطوة بخطوة</p>
+    </div>
+    <video id="introVideo" style="display:none;width:100%;height:100%;object-fit:cover;" controls>
+      <source src="vid.mp4" type="video/mp4">
+      <p style="color:white;text-align:center;padding:20px;">متصفحك لا يدعم تشغيل الفيديو. <a href="vid.mp4" style="color:var(--secondary)">تحميل الفيديو</a></p>
+    </video>
+  </div>
+</div>
+
+<div class="interactive-squares-container">
+  <h2 class="section-title">🚀 بوابتك السريعة</h2>
+  <p class="section-sub">اختر وجهتك المفضلة وانطلق فوراً إلى القسم الذي تريده</p>
+  <div class="interactive-squares">
+    <a href="student.html" class="square-card">
+      <div class="square-icon">📚</div>
+      <div class="square-title">المواد الدراسية</div>
+    </a>
+    <a href="progress.html" class="square-card">
+      <div class="square-icon">📈</div>
+      <div class="square-title">التقدم</div>
+    </a>
+    <a href="badges.html" class="square-card">
+      <div class="square-icon">🏆</div>
+      <div class="square-title">الإنجازات</div>
+    </a>
+    <a href="parent.html" class="square-card">
+      <div class="square-icon">👨‍👩‍👧</div>
+      <div class="square-title">ولي الأمر</div>
+    </a>
+    <a href="teacher.html" class="square-card">
+      <div class="square-icon">👨‍🏫</div>
+      <div class="square-title">ملاحظات المعلم</div>
+    </a>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">📚 مسارات التعلم</h2>
+  <p class="section-sub">نقدم باقة متنوعة من المواد الأساسية المصممة بطريقة ممتعة وتفاعلية تناسب جميع الأطفال</p>
+  <div class="icons-grid">
+    <a href="student.html" class="icon-card">
+      <div class="icon">🔢</div>
+      <div class="icon-name">الرياضيات</div>
+      <div class="icon-desc">الأعداد والعمليات</div>
+    </a>
+    <a href="student.html" class="icon-card">
+      <div class="icon">📖</div>
+      <div class="icon-name">اللغة العربية</div>
+      <div class="icon-desc">القراءة والكتابة</div>
+    </a>
+    <a href="student.html" class="icon-card">
+      <div class="icon">🔬</div>
+      <div class="icon-name">العلوم</div>
+      <div class="icon-desc">اكتشاف الطبيعة</div>
+    </a>
+    <a href="student.html" class="icon-card">
+      <div class="icon">🌍</div>
+      <div class="icon-name">الإنجليزية</div>
+      <div class="icon-desc">تعلّم ممتع</div>
+    </a>
+    <a href="student.html" class="icon-card">
+      <div class="icon">🎨</div>
+      <div class="icon-name">الفنون</div>
+      <div class="icon-desc">الإبداع والتعبير</div>
+    </a>
+    <a href="student.html" class="icon-card">
+      <div class="icon">⭐</div>
+      <div class="icon-name">التربية الإسلامية</div>
+      <div class="icon-desc">القرآن والقيم</div>
+    </a>
+  </div>
+</div>
+
+<div class="login-section">
+  <div class="login-card">
+    <div class="green-badge">✅ حساب مجاني تماماً</div>
+    <h2 style="font-size:2.2rem;font-weight:900;margin-bottom:16px;">ابدأ رحلتك الآن!</h2>
+    <p style="color:var(--muted);margin-bottom:35px;line-height:1.7;font-size:1.1rem;">
+      أنشئ حسابك المجاني وتتبع تقدمك، اكسب النقاط والشارات، وشارك إنجازاتك الرائعة مع معلمك وولي أمرك.
+    </p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;width:100%;">
+      <a href="login.html" style="
+        display:inline-flex;align-items:center;justify-content:center;gap:10px;
+        background: linear-gradient(135deg,var(--green),#00b865);
+        color:#0D0B1E; padding:16px 36px; border-radius:50px;
+        font-weight:800;font-size:1.1rem;text-decoration:none;
+        box-shadow: 0 10px 30px rgba(38,222,129,0.4);
+        transition:all 0.3s ease;
+      " onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 15px 35px rgba(38,222,129,0.6)'" onmouseout="this.style.transform=''; this.style.boxShadow='0 10px 30px rgba(38,222,129,0.4)'">
+        🚀 إنشاء حساب مجاني
+      </a>
+      <a href="student.html" style="
+        display:inline-flex;align-items:center;justify-content:center;gap:10px;
+        background:transparent;color:var(--text);
+        padding:16px 36px;border-radius:50px;
+        font-weight:700;font-size:1.1rem;text-decoration:none;
+        border:2px solid var(--border);
+        transition:all 0.3s ease;
+      " onmouseover="this.style.background='rgba(108,63,232,0.1)'; this.style.borderColor='var(--primary)';" onmouseout="this.style.background='transparent'; this.style.borderColor='var(--border)';">
+        👀 تصفح بدون حساب
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 أُفُق — منصة تعليمية للأطفال | جميع الحقوق محفوظة</p>
+</footer>
+
+<script>
+  function playVideo() {
+    const p = document.getElementById('videoPlaceholder');
+    const v = document.getElementById('introVideo');
+    p.style.display = 'none';
+    v.style.display = 'block';
+    v.play().catch(() => {});
+  }
+  
+  // Check login state
+  const state = JSON.parse(localStorage.getItem('ufuq_data') || '{}');
+  if (state.loggedIn && state.user) {
+    const loginLink = document.querySelector('.btn-login');
+    if (loginLink) loginLink.innerHTML = `👤 ` + state.user.name;
+  }
+</script>
+</body>
+</html>

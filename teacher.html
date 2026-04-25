@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أُفُق | ملاحظات المعلم</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--primary:#6C3FE8;--secondary:#F7B731;--green:#26de81;--cyan:#00D2D3;--accent:#FF6B6B;--bg:#0D0B1E;--card:#16132E;--card2:#1E1A3A;--text:#F0EEFF;--muted:#8B7FC7;--border:rgba(108,63,232,0.3);}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);}
+  nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(13,11,30,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-size:1.6rem;font-weight:900;color:var(--primary);text-decoration:none;}
+  .nav-links{display:flex;gap:6px;flex-wrap:wrap;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;padding:7px 12px;border-radius:20px;transition:all 0.2s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--text);background:rgba(108,63,232,0.2);}
+  .main{padding:90px 24px 60px;max-width:1000px;margin:0 auto;}
+  .page-header{margin-bottom:36px;}
+  .page-header h1{font-size:2rem;font-weight:900;margin-bottom:6px;}
+  .page-header p{color:var(--muted);}
+  /* Quick shortcuts */
+  .shortcuts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-bottom:32px;}
+  .shortcut-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;text-align:center;text-decoration:none;color:var(--text);transition:all 0.3s;cursor:pointer;}
+  .shortcut-card:hover{border-color:var(--primary);transform:translateY(-5px);box-shadow:0 20px 40px rgba(0,0,0,0.3);}
+  .shortcut-icon{font-size:2.2rem;margin-bottom:12px;}
+  .shortcut-name{font-size:1rem;font-weight:800;margin-bottom:4px;}
+  .shortcut-desc{font-size:0.78rem;color:var(--muted);}
+  /* Materials */
+  .section-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:22px;}
+  .section-card h3{font-size:1.1rem;font-weight:800;margin-bottom:18px;color:var(--cyan);}
+  .mat-list{display:flex;flex-direction:column;gap:10px;}
+  .mat-row{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--card2);border-radius:14px;text-decoration:none;color:var(--text);transition:all 0.2s;}
+  .mat-row:hover{background:rgba(108,63,232,0.15);transform:translateX(-4px);}
+  .mat-icon{font-size:1.4rem;}
+  .mat-name{flex:1;font-weight:700;}
+  .mat-arrow{color:var(--cyan);font-size:1.1rem;}
+  /* Session timer */
+  .timer-card{background:linear-gradient(135deg,rgba(108,63,232,0.15),rgba(0,210,211,0.1));border:1px solid var(--border);border-radius:20px;padding:28px;margin-bottom:22px;text-align:center;}
+  .timer-card h3{font-size:1.1rem;font-weight:800;margin-bottom:12px;}
+  .timer-display{font-size:3rem;font-weight:900;color:var(--secondary);font-variant-numeric:tabular-nums;margin-bottom:20px;}
+  .timer-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-t{padding:12px 24px;border:none;border-radius:12px;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:0.9rem;font-weight:700;transition:all 0.2s;}
+  .btn-t.start{background:var(--green);color:#0D0B1E;}
+  .btn-t.pause{background:var(--secondary);color:#0D0B1E;}
+  .btn-t.reset{background:var(--card2);color:var(--muted);border:1px solid var(--border);}
+  .btn-t:hover{transform:translateY(-2px);}
+  /* Notes */
+  .notes-area{width:100%;padding:14px;background:var(--card2);border:1px solid var(--border);border-radius:12px;color:var(--text);font-family:'Tajawal',sans-serif;font-size:0.9rem;resize:vertical;min-height:120px;outline:none;}
+  .notes-area:focus{border-color:var(--primary);}
+  .btn-save{padding:11px 22px;background:var(--primary);border:none;border-radius:10px;color:white;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:0.9rem;font-weight:700;margin-top:10px;transition:all 0.2s;}
+  .btn-save:hover{transform:translateY(-2px);}
+  /* Tips */
+  .tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .tip-card{background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:18px;}
+  .tip-card-icon{font-size:1.4rem;margin-bottom:8px;}
+  .tip-card-title{font-size:0.9rem;font-weight:800;margin-bottom:6px;}
+  .tip-card-text{font-size:0.78rem;color:var(--muted);line-height:1.6;}
+  .quick-nav{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:28px;}
+  .quick-nav a{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:50px;padding:10px 22px;color:var(--cyan);text-decoration:none;font-size:0.88rem;font-weight:600;transition:all 0.2s;}
+  .quick-nav a:hover{border-color:var(--cyan);transform:translateY(-2px);}
+  .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--green);color:#0D0B1E;padding:14px 28px;border-radius:50px;font-weight:700;font-family:'Tajawal',sans-serif;font-size:0.95rem;opacity:0;transition:opacity 0.3s;z-index:2000;pointer-events:none;}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">أُفُق</a>
+  <div class="nav-links">
+    <a href="student.html">المواد</a>
+    <a href="progress.html">التقدم</a>
+    <a href="badges.html">الإنجازات</a>
+    <a href="parent.html">متابعة ولي الأمر </a>
+    <a href="teacher.html" class="active">المعلم</a>
+    <a href="login.html" id="loginLink">دخول</a>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="page-header">
+    <h1>📋 ملاحظات المعلم</h1>
+    <p>اختصارات سريعة لبدء الحصة وإدارتها بكفاءة</p>
+  </div>
+
+  <!-- Quick Shortcuts -->
+  <div class="shortcuts-grid">
+    <a href="student.html" class="shortcut-card">
+      <div class="shortcut-icon">📚</div>
+      <div class="shortcut-name">عرض المواد</div>
+      <div class="shortcut-desc">افتح شبكة المواد على الشاشة الكبيرة</div>
+    </a>
+    <a href="badges.html" class="shortcut-card">
+      <div class="shortcut-icon">🏆</div>
+      <div class="shortcut-name">الإنجازات</div>
+      <div class="shortcut-desc">راجع الشارات والإنجازات أثناء الحصة</div>
+    </a>
+    <a href="progress.html" class="shortcut-card">
+      <div class="shortcut-icon">📊</div>
+      <div class="shortcut-name">التقدم</div>
+      <div class="shortcut-desc">لوحة التقدم التفصيلية للطلاب</div>
+    </a>
+    <div class="shortcut-card" onclick="toggleFullscreen()">
+      <div class="shortcut-icon">🖥️</div>
+      <div class="shortcut-name">وضع الشاشة الكاملة</div>
+      <div class="shortcut-desc">اضغط لعرض الحصة بملء الشاشة</div>
+    </div>
+  </div>
+
+  <!-- Session Timer -->
+  <div class="timer-card">
+    <h3>⏱️ مؤقت الحصة</h3>
+    <div class="timer-display" id="timerDisplay">00:00:00</div>
+    <div class="timer-btns">
+      <button class="btn-t start" onclick="startTimer()">▶ بدء</button>
+      <button class="btn-t pause" onclick="pauseTimer()">⏸ إيقاف مؤقت</button>
+      <button class="btn-t reset" onclick="resetTimer()">↺ إعادة تعيين</button>
+    </div>
+  </div>
+
+  <!-- Materials List -->
+  <div class="section-card">
+    <h3>📖 المواد المتاحة</h3>
+    <div class="mat-list">
+      <a href="student.html" class="mat-row"><span class="mat-icon">🔢</span><span class="mat-name">الرياضيات</span><span class="mat-arrow">◀ عرض</span></a>
+      <a href="student.html" class="mat-row"><span class="mat-icon">📖</span><span class="mat-name">اللغة العربية</span><span class="mat-arrow">◀ عرض</span></a>
+      <a href="student.html" class="mat-row"><span class="mat-icon">🔬</span><span class="mat-name">العلوم</span><span class="mat-arrow">◀ عرض</span></a>
+      <a href="student.html" class="mat-row"><span class="mat-icon">🌍</span><span class="mat-name">اللغة الإنجليزية</span><span class="mat-arrow">◀ عرض</span></a>
+      <a href="student.html" class="mat-row"><span class="mat-icon">🎨</span><span class="mat-name">الفنون</span><span class="mat-arrow">◀ عرض</span></a>
+      <a href="student.html" class="mat-row"><span class="mat-icon">⭐</span><span class="mat-name">التربية الإسلامية</span><span class="mat-arrow">◀ عرض</span></a>
+    </div>
+  </div>
+
+  <!-- Teacher Notes -->
+  <div class="section-card">
+    <h3>📝 ملاحظات الحصة</h3>
+    <textarea class="notes-area" id="teacherNotes" placeholder="اكتب ملاحظاتك هنا — تُحفظ تلقائياً على هذا الجهاز..."></textarea>
+    <button class="btn-save" onclick="saveNotes()">💾 حفظ الملاحظات</button>
+  </div>
+
+  <!-- Tips -->
+  <div class="section-card">
+    <h3>💡 نصائح لاستخدام المنصة في الحصة</h3>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-card-icon">🖥️</div>
+        <div class="tip-card-title">العرض على الشاشة</div>
+        <div class="tip-card-text">افتح صفحة المواد على الجهاز الرئيسي واعرضها بوضع الشاشة الكاملة لتسهيل المتابعة الجماعية.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card-icon">🏆</div>
+        <div class="tip-card-title">التحفيز والمنافسة</div>
+        <div class="tip-card-text">استخدم النقاط والشارات لتحفيز الطلاب. من يجمع أكثر النقاط في نهاية الأسبوع يحصل على مكافأة رمزية.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card-icon">⚡</div>
+        <div class="tip-card-title">الإجابات الصحيحة</div>
+        <div class="tip-card-text">اطلب من الطلاب تسجيل إجاباتهم الصحيحة في صفحة التقدم لتحديث إنجاز "سريع البديهة".</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card-icon">📅</div>
+        <div class="tip-card-title">الاستمرارية اليومية</div>
+        <div class="tip-card-text">شجّع الطلاب على الدخول يومياً لبناء سلسلة الأيام المتتالية — هذا يبني عادة التعلم المنتظم.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-nav">
+    <a href="student.html">◀ المواد الدراسية</a>
+    <a href="progress.html">◀ لوحة التقدم</a>
+    <a href="badges.html">◀ الإنجازات</a>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let timerInterval = null;
+let timerSeconds = 0;
+let timerRunning = false;
+
+function formatTime(s) {
+  const h = Math.floor(s/3600), m = Math.floor((s%3600)/60), sec = s%60;
+  return [h,m,sec].map(n=>String(n).padStart(2,'0')).join(':');
+}
+function startTimer() {
+  if(timerRunning) return;
+  timerRunning = true;
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    document.getElementById('timerDisplay').textContent = formatTime(timerSeconds);
+  }, 1000);
+}
+function pauseTimer() {
+  timerRunning = false;
+  clearInterval(timerInterval);
+}
+function resetTimer() {
+  pauseTimer();
+  timerSeconds = 0;
+  document.getElementById('timerDisplay').textContent = '00:00:00';
+}
+function toggleFullscreen() {
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+  else document.exitFullscreen?.();
+}
+function saveNotes() {
+  const notes = document.getElementById('teacherNotes').value;
+  localStorage.setItem('ufuq_teacher_notes', notes);
+  showToast('✅ تم حفظ الملاحظات');
+}
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.opacity='1';
+  setTimeout(()=>t.style.opacity='0',3000);
+}
+// Load saved notes
+const saved = localStorage.getItem('ufuq_teacher_notes');
+if(saved) document.getElementById('teacherNotes').value = saved;
+// Login
+const state = JSON.parse(localStorage.getItem('ufuq_data')||'{}');
+if(state.user) document.getElementById('loginLink').textContent = '👤 ' + state.user.name;
+</script>
+</body>
+</html>

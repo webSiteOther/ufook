@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أُفُق | المواد الدراسية</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary:#6C3FE8;--secondary:#F7B731;--accent:#FF6B6B;
+    --green:#26de81;--cyan:#00D2D3;
+    --bg:#0D0B1E;--card:#16132E;--card2:#1E1A3A;
+    --text:#F0EEFF;--muted:#8B7FC7;--border:rgba(108,63,232,0.3);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);}
+  nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(13,11,30,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-size:1.6rem;font-weight:900;color:var(--primary);text-decoration:none;}
+  .nav-links{display:flex;gap:6px;flex-wrap:wrap;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;padding:7px 12px;border-radius:20px;transition:all 0.2s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--text);background:rgba(108,63,232,0.2);}
+  .main{padding:90px 24px 60px;max-width:1100px;margin:0 auto;}
+  .page-header{text-align:center;margin-bottom:48px;}
+  .page-header h1{font-size:2.4rem;font-weight:900;margin-bottom:8px;}
+  .page-header p{color:var(--muted);font-size:0.95rem;}
+  /* User card */
+  .user-card{
+    background:var(--card);border:1px solid var(--border);border-radius:20px;
+    padding:24px 28px;margin-bottom:32px;
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+  }
+  .user-info{display:flex;align-items:center;gap:14px;}
+  .avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#8B5CF6);display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;}
+  .user-name{font-size:1.1rem;font-weight:700;}
+  .user-level{font-size:0.8rem;color:var(--muted);}
+  .user-stats{display:flex;gap:24px;flex-wrap:wrap;}
+  .u-stat{text-align:center;}
+  .u-stat-val{font-size:1.3rem;font-weight:900;color:var(--secondary);}
+  .u-stat-label{font-size:0.75rem;color:var(--muted);}
+  /* Support toggle */
+  .support-toggle{
+    display:flex;align-items:center;gap:12px;
+    background:rgba(108,63,232,0.1);border:1px solid var(--border);
+    border-radius:14px;padding:12px 18px;cursor:pointer;
+    transition:all 0.2s;margin-bottom:28px;
+  }
+  .support-toggle:hover{background:rgba(108,63,232,0.2);}
+  .toggle-switch{width:40px;height:22px;background:#333;border-radius:11px;position:relative;transition:background 0.2s;}
+  .toggle-switch.on{background:var(--primary);}
+  .toggle-knob{width:18px;height:18px;background:white;border-radius:50%;position:absolute;top:2px;left:2px;transition:left 0.2s;}
+  .toggle-switch.on .toggle-knob{left:20px;}
+  /* Subjects grid */
+  .subjects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;}
+  .subject-card{
+    background:var(--card);border:1px solid var(--border);border-radius:22px;
+    padding:28px;transition:all 0.3s;position:relative;overflow:hidden;
+  }
+  .subject-card::before{
+    content:'';position:absolute;top:0;right:0;width:100px;height:100px;
+    background:radial-gradient(circle,rgba(108,63,232,0.1),transparent);
+    border-radius:50%;transform:translate(30%,-30%);
+  }
+  .subject-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,0.4);border-color:var(--primary);}
+  .subject-header{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+  .subject-icon{font-size:2.2rem;width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:rgba(108,63,232,0.15);border-radius:16px;}
+  .subject-title{font-size:1.15rem;font-weight:800;}
+  .subject-desc{font-size:0.82rem;color:var(--muted);}
+  .progress-bar-wrap{margin-bottom:14px;}
+  .progress-label{display:flex;justify-content:space-between;font-size:0.78rem;color:var(--muted);margin-bottom:6px;}
+  .progress-bar{height:8px;background:var(--card2);border-radius:10px;overflow:hidden;}
+  .progress-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--primary),var(--cyan));transition:width 0.6s ease;}
+  .subject-stats{display:flex;gap:16px;margin-bottom:18px;}
+  .s-stat{flex:1;background:var(--card2);border-radius:12px;padding:10px;text-align:center;}
+  .s-stat-val{font-size:1.1rem;font-weight:800;color:var(--secondary);}
+  .s-stat-label{font-size:0.72rem;color:var(--muted);}
+  .subject-actions{display:flex;gap:10px;}
+  .btn-info{
+    flex:1;padding:11px;border:1px solid var(--border);border-radius:12px;
+    background:transparent;color:var(--muted);cursor:pointer;
+    font-family:'Tajawal',sans-serif;font-size:0.88rem;
+    transition:all 0.2s;
+  }
+  .btn-info:hover{border-color:var(--primary);color:var(--text);}
+  
+  /* تم تعديل هذا التنسيق ليتوافق مع رابط <a> بدلاً من زر <button> */
+  .btn-start{
+    flex:2;padding:11px;border:none;border-radius:12px;
+    background:linear-gradient(135deg,var(--primary),#8B5CF6);
+    color:white;cursor:pointer;font-family:'Tajawal',sans-serif;
+    font-size:0.95rem;font-weight:700;
+    transition:all 0.2s;
+    box-shadow:0 4px 15px rgba(108,63,232,0.4);
+    text-decoration:none; display:flex; align-items:center; justify-content:center;
+  }
+  .btn-start:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(108,63,232,0.5);}
+  
+  /* Modal */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center;padding:20px;}
+  .modal-overlay.open{display:flex;}
+  .modal{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:36px;max-width:500px;width:100%;animation:slideUp 0.3s ease;}
+  @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  .modal-close{float:left;background:none;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer;line-height:1;}
+  .modal-title{font-size:1.4rem;font-weight:900;margin-bottom:16px;}
+  .modal-body{color:var(--muted);line-height:1.8;font-size:0.95rem;}
+  /* Quick nav */
+  .quick-nav{
+    display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
+    padding:40px 0 0;
+  }
+  .quick-nav a{
+    display:flex;align-items:center;gap:8px;
+    background:var(--card);border:1px solid var(--border);
+    border-radius:50px;padding:10px 22px;
+    color:var(--cyan);text-decoration:none;
+    font-size:0.88rem;font-weight:600;
+    transition:all 0.2s;
+  }
+  .quick-nav a:hover{border-color:var(--cyan);transform:translateY(-2px);}
+  .toast{
+    position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
+    background:var(--green);color:#0D0B1E;
+    padding:14px 28px;border-radius:50px;font-weight:700;
+    font-family:'Tajawal',sans-serif;font-size:0.95rem;
+    opacity:0;transition:opacity 0.3s;z-index:2000;
+    pointer-events:none;
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">أُفُق</a>
+  <div class="nav-links">
+    <a href="student.html" class="active">المواد</a>
+    <a href="progress.html">التقدم</a>
+    <a href="badges.html">الإنجازات</a>
+    <a href="parent.html">ولي الأمر</a>
+    <a href="teacher.html">ملاحظات المعلم</a>
+    <a href="login.html" id="loginLink">دخول</a>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="page-header">
+    <h1>📚 المواد الدراسية</h1>
+    <p>اختر مادتك وابدأ رحلتك التعليمية — كل نشاط يكسبك نقاطاً وإنجازات!</p>
+  </div>
+
+  <div class="user-card" id="userCard">
+    <div class="user-info">
+      <div class="avatar" id="avatarEl">👤</div>
+      <div>
+        <div class="user-name" id="userName">زائر</div>
+        <div class="user-level" id="userLevel">المستوى 1 — مبتدئ</div>
+      </div>
+    </div>
+    <div class="user-stats">
+      <div class="u-stat">
+        <div class="u-stat-val" id="totalPts">0</div>
+        <div class="u-stat-label">إجمالي النقاط</div>
+      </div>
+      <div class="u-stat">
+        <div class="u-stat-val" id="streakVal">0</div>
+        <div class="u-stat-label">أيام متتالية</div>
+      </div>
+      <div class="u-stat">
+        <div class="u-stat-val" id="badgeCount">0/8</div>
+        <div class="u-stat-label">الإنجازات</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="support-toggle" id="supportToggle" onclick="toggleSupport()">
+    <div class="toggle-switch" id="supportSwitch">
+      <div class="toggle-knob"></div>
+    </div>
+    <div>
+      <div style="font-weight:700;font-size:0.95rem;">✨ وضع الدعم</div>
+      <div style="font-size:0.8rem;color:var(--muted);">تلميحات ومساعدة إضافية لكل مادة</div>
+    </div>
+  </div>
+
+  <div class="subjects-grid" id="subjectsGrid"></div>
+
+  <div class="quick-nav">
+    <a href="progress.html">◀ لوحة التقدم</a>
+    <a href="badges.html">◀ معرض الإنجازات</a>
+    <a href="parent.html">◀ متابعة ولي الأمر</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SUBJECTS = [
+  { key:'math', icon:'🔢', name:'الرياضيات', desc:'الأعداد والعمليات الحسابية', color:'#6C3FE8',
+    info:'مادة الرياضيات تشمل العمليات الحسابية الأساسية (جمع، طرح، ضرب، قسمة)، الكسور، القياس، والهندسة الأساسية. ستتعلم حل المسائل بطرق ممتعة وتفاعلية عبر أنشطة مصممة لتحفيز التفكير المنطقي.' },
+  { key:'arabic', icon:'📖', name:'اللغة العربية', desc:'القراءة والكتابة والإملاء', color:'#F7B731',
+    info:'اللغة العربية هي لغة القرآن الكريم ولغتنا الأم. ستتعلم القراءة الصحيحة، الكتابة الجميلة، قواعد الإملاء، والنحو الأساسي من خلال قصص وتمارين تفاعلية ممتعة.' },
+  { key:'science', icon:'🔬', name:'العلوم', desc:'اكتشاف الطبيعة والكون', color:'#26de81',
+    info:'العلوم تفتح لك أبواب عجائب الكون! ستتعلم عن الكائنات الحية، الطاقة، المادة، الفلك، والبيئة. ستجري تجارب بسيطة وتكتشف أسرار الطبيعة من حولك.' },
+  { key:'english', icon:'🌍', name:'اللغة الإنجليزية', desc:'تعلم الإنجليزية بطريقة ممتعة', color:'#00D2D3',
+    info:'الإنجليزية هي لغة العالم! ستتعلم المفردات الأساسية، الجمل اليومية، القراءة البسيطة والاستماع عبر أغانٍ وقصص ممتعة تجعل التعلم سهلاً وشيقاً.' },
+  { key:'art', icon:'🎨', name:'الفنون', desc:'الإبداع والتعبير الفني', color:'#FF6B6B',
+    info:'الفنون تنمّي إبداعك وخيالك! ستتعلم الرسم، التلوين، الأشكال الهندسية، والتعبير الفني عبر مشاريع ممتعة تساعدك على التعبير عن أفكارك ومشاعرك بشكل جميل.' },
+  { key:'islamic', icon:'⭐', name:'التربية الإسلامية', desc:'القرآن والأخلاق والقيم', color:'#F7B731',
+    info:'التربية الإسلامية تعلمك القرآن الكريم وتفسيره، الأحاديث النبوية الشريفة، الفقه الأساسي، والأخلاق الإسلامية الحميدة. ستتعلم كيف تكون مسلماً صالحاً ومفيداً لأسرتك ومجتمعك.' },
+];
+
+let state = {};
+
+function getState() {
+  try { return JSON.parse(localStorage.getItem('ufuq_data') || '{}'); } catch(e) { return {}; }
+}
+function saveState(s) { localStorage.setItem('ufuq_data', JSON.stringify(s)); }
+function getTotal(s) { return Object.values(s.points || {}).reduce((a,b)=>a+b,0); }
+function getLevel(p) {
+  if(p>=1000) return {num:5,name:'خبير'};
+  if(p>=500) return {num:4,name:'متقدم'};
+  if(p>=200) return {num:3,name:'متوسط'};
+  if(p>=50) return {num:2,name:'متمكن'};
+  return {num:1,name:'مبتدئ'};
+}
+
+function init() {
+  state = getState();
+  if(!state.points) state.points = {math:0,arabic:0,science:0,english:0,art:0,islamic:0};
+  if(!state.activities) state.activities = {math:0,arabic:0,science:0,english:0,art:0,islamic:0};
+  if(!state.badges) state.badges = [];
+  if(!state.streak) state.streak = 0;
+  // Update streak
+  const today = new Date().toDateString();
+  if(state.lastActive !== today) {
+    const yesterday = new Date(Date.now()-86400000).toDateString();
+    if(state.lastActive === yesterday) state.streak = (state.streak||0) + 1;
+    else if(state.lastActive !== today) state.streak = 1;
+    state.lastActive = today;
+    saveState(state);
+  }
+  renderUI();
+  renderSubjects();
+}
+
+function renderUI() {
+  const total = getTotal(state);
+  const lvl = getLevel(total);
+  document.getElementById('totalPts').textContent = total;
+  document.getElementById('streakVal').textContent = state.streak || 0;
+  document.getElementById('userLevel').textContent = `المستوى ${lvl.num} — ${lvl.name}`;
+  if(state.user) {
+    document.getElementById('userName').textContent = state.user.name;
+    document.getElementById('avatarEl').textContent = state.user.name[0];
+    document.getElementById('loginLink').textContent = '👤 ' + state.user.name;
+  }
+  const badges = checkBadges(state);
+  document.getElementById('badgeCount').textContent = badges.length + '/8';
+  const sw = document.getElementById('supportSwitch');
+  if(state.supportMode) sw.classList.add('on'); else sw.classList.remove('on');
+}
+
+function checkBadges(s) {
+  const total = getTotal(s);
+  const badges = [];
+  const acts = Object.values(s.activities||{}).reduce((a,b)=>a+b,0);
+  if(acts>=1) badges.push('first_step');
+  if((s.streak||0)>=3) badges.push('enthusiast');
+  if(total>=1000) badges.push('diamond');
+  if((s.points?.math||0)>=50) badges.push('math_hero');
+  if((s.points?.arabic||0)>=50) badges.push('reader');
+  if((s.points?.science||0)>=50) badges.push('scientist');
+  if((s.correctAnswers||0)>=10) badges.push('quick_mind');
+  if(Object.values(s.points||{}).every(p=>p>0)) badges.push('integrated');
+  state.badges = badges;
+  return badges;
+}
+
+function renderSubjects() {
+  const grid = document.getElementById('subjectsGrid');
+  grid.innerHTML = '';
+  SUBJECTS.forEach(sub => {
+    const pts = state.points?.[sub.key] || 0;
+    const acts = state.activities?.[sub.key] || 0;
+    const pct = Math.min(100, Math.round(pts/50*100));
+    const lvl = getLevel(pts);
+    
+    // التعديل هنا: تحويل الزر إلى رابط <a> يحمل اسم ملف المادة
+    grid.innerHTML += `
+      <div class="subject-card">
+        <div class="subject-header">
+          <div class="subject-icon">${sub.icon}</div>
+          <div>
+            <div class="subject-title">${sub.name}</div>
+            <div class="subject-desc">${sub.desc}</div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-label"><span>${pct}% مكتمل</span><span>${pts} / 50 نقطة</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+        </div>
+        <div class="subject-stats">
+          <div class="s-stat"><div class="s-stat-val">${pts}</div><div class="s-stat-label">النقاط</div></div>
+          <div class="s-stat"><div class="s-stat-val">${lvl.name}</div><div class="s-stat-label">المستوى</div></div>
+          <div class="s-stat"><div class="s-stat-val">${acts}</div><div class="s-stat-label">أنشطة</div></div>
+        </div>
+        <div class="subject-actions">
+          <button class="btn-info" onclick="showInfo('${sub.key}')">ⓘ معلومات</button>
+          <a href="${sub.key}.html" class="btn-start">▶ ابدأ الآن</a>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function showInfo(key) {
+  const sub = SUBJECTS.find(s=>s.key===key);
+  document.getElementById('modalTitle').textContent = sub.icon + ' ' + sub.name;
+  document.getElementById('modalBody').innerHTML = `
+    <p>${sub.info}</p>
+    <br>
+    <p><strong style="color:var(--secondary)">النقاط المكتسبة:</strong> ${state.points?.[key]||0} نقطة</p>
+    <p><strong style="color:var(--secondary)">الأنشطة المكتملة:</strong> ${state.activities?.[key]||0} نشاط</p>
+    <p><strong style="color:var(--secondary)">الهدف:</strong> 50 نقطة للوصول لمستوى متمكن</p>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if(!e || e.target.id==='modalOverlay') {
+    document.getElementById('modalOverlay').classList.remove('open');
+  }
+}
+
+function toggleSupport() {
+  state.supportMode = !state.supportMode;
+  saveState(state);
+  renderUI();
+  showToast(state.supportMode ? '✨ تم تفعيل وضع الدعم' : '🔕 تم إيقاف وضع الدعم');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.style.opacity='1';
+  setTimeout(()=>t.style.opacity='0', 3000);
+}
+
+init();
+</script>
+</body>
+</html>

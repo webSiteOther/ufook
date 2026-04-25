@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أُفُق | متابعة ولي الأمر</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--primary:#6C3FE8;--secondary:#F7B731;--green:#26de81;--cyan:#00D2D3;--accent:#FF6B6B;--bg:#0D0B1E;--card:#16132E;--card2:#1E1A3A;--text:#F0EEFF;--muted:#8B7FC7;--border:rgba(108,63,232,0.3);}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);}
+  nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(13,11,30,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-size:1.6rem;font-weight:900;color:var(--primary);text-decoration:none;}
+  .nav-links{display:flex;gap:6px;flex-wrap:wrap;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;padding:7px 12px;border-radius:20px;transition:all 0.2s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--text);background:rgba(108,63,232,0.2);}
+  .main{padding:90px 24px 60px;max-width:900px;margin:0 auto;}
+  .page-header{margin-bottom:36px;}
+  .page-header h1{font-size:2rem;font-weight:900;margin-bottom:6px;}
+  .page-header p{color:var(--muted);font-size:0.9rem;}
+  .info-banner{background:rgba(38,222,129,0.1);border:1px solid rgba(38,222,129,0.3);border-radius:14px;padding:16px 20px;margin-bottom:28px;font-size:0.88rem;color:#b0f5d4;}
+  /* Top cards */
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:28px;}
+  .stat-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px 16px;text-align:center;}
+  .stat-icon{font-size:1.8rem;margin-bottom:8px;}
+  .stat-val{font-size:1.8rem;font-weight:900;color:var(--secondary);}
+  .stat-sub{font-size:0.75rem;color:var(--muted);margin-top:4px;}
+  /* Subject distribution */
+  .section-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:22px;}
+  .section-card h3{font-size:1.1rem;font-weight:800;margin-bottom:18px;}
+  .subj-row{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+  .subj-icon{font-size:1.3rem;width:36px;text-align:center;}
+  .subj-name{flex:1;font-size:0.9rem;font-weight:600;}
+  .subj-bar-wrap{flex:2;}
+  .subj-bar{height:8px;background:var(--card2);border-radius:10px;overflow:hidden;}
+  .subj-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--primary),var(--cyan));transition:width 0.6s;}
+  .subj-pts{font-size:0.82rem;color:var(--secondary);font-weight:700;min-width:60px;text-align:left;}
+  /* Badges list */
+  .badge-list{display:flex;flex-direction:column;gap:10px;}
+  .badge-row{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--card2);border-radius:12px;}
+  .badge-row.locked{opacity:0.4;}
+  .badge-row-icon{font-size:1.4rem;}
+  .badge-row-name{font-size:0.88rem;font-weight:700;}
+  .badge-row-status{margin-right:auto;font-size:0.78rem;padding:3px 10px;border-radius:20px;}
+  .badge-row.unlocked .badge-row-status{background:rgba(247,183,49,0.2);color:var(--secondary);}
+  .badge-row.locked .badge-row-status{background:rgba(0,0,0,0.2);color:var(--muted);}
+  /* Activity chart */
+  .chart-wrap{display:flex;align-items:flex-end;gap:8px;height:100px;margin-top:8px;}
+  .chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+  .chart-bar{width:100%;background:var(--primary);border-radius:6px 6px 0 0;min-height:4px;transition:height 0.5s;}
+  .chart-label{font-size:0.72rem;color:var(--muted);}
+  /* Tips */
+  .tip-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .tip-item{display:flex;gap:12px;align-items:flex-start;padding:12px;background:var(--card2);border-radius:12px;}
+  .tip-emoji{font-size:1.2rem;flex-shrink:0;}
+  .tip-text{font-size:0.85rem;color:var(--muted);line-height:1.6;}
+  /* Nav */
+  .quick-nav{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:28px;}
+  .quick-nav a{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:50px;padding:10px 22px;color:var(--cyan);text-decoration:none;font-size:0.88rem;font-weight:600;transition:all 0.2s;}
+  .quick-nav a:hover{border-color:var(--cyan);transform:translateY(-2px);}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">أُفُق</a>
+  <div class="nav-links">
+    <a href="student.html">المواد</a>
+    <a href="progress.html">التقدم</a>
+    <a href="badges.html">الإنجازات</a>
+    <a href="parent.html" class="active">ولي الأمر</a>
+    <a href="teacher.html">ملاحظات المعلم</a>
+    <a href="login.html" id="loginLink">دخول</a>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="page-header">
+    <h1>👨‍👩‍👧 متابعة ولي الأمر</h1>
+    <p>ملخص شامل لتقدم طفلك — بيانات محفوظة على هذا الجهاز</p>
+  </div>
+
+  <div class="info-banner">
+    ✅ هذه الصفحة تعرض بيانات التعلم المحفوظة محلياً على هذا الجهاز. لمزيد من التفاصيل يرجى التواصل مع المعلم.
+  </div>
+
+  <div class="stats-grid" id="statsGrid"></div>
+
+  <!-- Subject Distribution -->
+  <div class="section-card">
+    <h3>📊 التوزيع حسب المادة</h3>
+    <div id="subjectDist"></div>
+  </div>
+
+  <!-- Activity Chart -->
+  <div class="section-card">
+    <h3>📅 نشاط الأسبوع (تقريبي)</h3>
+    <div class="chart-wrap" id="activityChart"></div>
+  </div>
+
+  <!-- Badges -->
+  <div class="section-card">
+    <h3>🏅 الإنجازات</h3>
+    <div class="badge-list" id="badgeList"></div>
+  </div>
+
+  <!-- Tips -->
+  <div class="section-card">
+    <h3>💡 نصائح لولي الأمر</h3>
+    <ul class="tip-list">
+      <li class="tip-item"><span class="tip-emoji">⏰</span><span class="tip-text">خصّص 20-30 دقيقة يومياً للتعلم على المنصة لضمان التقدم المستمر وبناء عادة التعلم.</span></li>
+      <li class="tip-item"><span class="tip-emoji">🎉</span><span class="tip-text">احتفل بكل إنجاز يحققه طفلك — الشارات والنقاط محفّزات قوية لمواصلة التعلم.</span></li>
+      <li class="tip-item"><span class="tip-emoji">📖</span><span class="tip-text">اسأل طفلك كل يوم: ماذا تعلمت اليوم؟ الحوار يعزز الفهم ويظهر اهتمامك.</span></li>
+      <li class="tip-item"><span class="tip-emoji">⚖️</span><span class="tip-text">تأكد من التوازن بين المواد — لا تتركوا مادة دون اهتمام، فكل مادة مهمة للتطور الشامل.</span></li>
+      <li class="tip-item"><span class="tip-emoji">🤝</span><span class="tip-text">تواصل مع معلم طفلك لمعرفة مجالات الضعف والقوة وكيفية دعمه في المنزل.</span></li>
+    </ul>
+  </div>
+
+  <div class="quick-nav">
+    <a href="student.html">◀ المواد الدراسية</a>
+    <a href="progress.html">◀ لوحة التقدم</a>
+    <a href="badges.html">◀ الإنجازات</a>
+  </div>
+</div>
+
+<script>
+const SUBJECTS = [
+  {key:'math',icon:'🔢',name:'الرياضيات'},
+  {key:'arabic',icon:'📖',name:'اللغة العربية'},
+  {key:'science',icon:'🔬',name:'العلوم'},
+  {key:'english',icon:'🌍',name:'اللغة الإنجليزية'},
+  {key:'art',icon:'🎨',name:'الفنون'},
+  {key:'islamic',icon:'⭐',name:'التربية الإسلامية'},
+];
+const ALL_BADGES = [
+  {key:'first_step',icon:'🌟',name:'أول خطوة'},
+  {key:'enthusiast',icon:'🔥',name:'متحمّس'},
+  {key:'diamond',icon:'💎',name:'ماسي'},
+  {key:'math_hero',icon:'🏆',name:'بطل الرياضيات'},
+  {key:'reader',icon:'📚',name:'قارئ نهم'},
+  {key:'scientist',icon:'🔭',name:'عالم صغير'},
+  {key:'quick_mind',icon:'⚡',name:'سريع البديهة'},
+  {key:'integrated',icon:'🌈',name:'متكامل'},
+];
+function getState(){try{return JSON.parse(localStorage.getItem('ufuq_data')||'{}')}catch(e){return{}}}
+function getTotal(s){return Object.values(s.points||{}).reduce((a,b)=>a+b,0)}
+function getLevel(p){if(p>=1000)return'خبير';if(p>=500)return'متقدم';if(p>=200)return'متوسط';if(p>=50)return'متمكن';return'مبتدئ';}
+function checkBadges(s){
+  const total=getTotal(s);const b=[];
+  const acts=Object.values(s.activities||{}).reduce((a,c)=>a+c,0);
+  if(acts>=1)b.push('first_step');if((s.streak||0)>=3)b.push('enthusiast');
+  if(total>=1000)b.push('diamond');if((s.points?.math||0)>=50)b.push('math_hero');
+  if((s.points?.arabic||0)>=50)b.push('reader');if((s.points?.science||0)>=50)b.push('scientist');
+  if((s.correctAnswers||0)>=10)b.push('quick_mind');
+  if(Object.values(s.points||{}).every(p=>p>0))b.push('integrated');
+  return b;
+}
+const state = getState();
+if(state.user) document.getElementById('loginLink').textContent = '👤 ' + state.user.name;
+const total = getTotal(state);
+const badges = checkBadges(state);
+const totalActs = Object.values(state.activities||{}).reduce((a,b)=>a+b,0);
+
+// Stats
+document.getElementById('statsGrid').innerHTML = `
+  <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-val">${total}</div><div class="stat-sub">إجمالي النقاط</div></div>
+  <div class="stat-card"><div class="stat-icon">🏅</div><div class="stat-val">${getLevel(total)}</div><div class="stat-sub">المستوى الحالي</div></div>
+  <div class="stat-card"><div class="stat-icon">🔥</div><div class="stat-val">${state.streak||0}</div><div class="stat-sub">أيام متتالية</div></div>
+  <div class="stat-card"><div class="stat-icon">🏆</div><div class="stat-val">${badges.length}/8</div><div class="stat-sub">الإنجازات</div></div>
+  <div class="stat-card"><div class="stat-icon">📝</div><div class="stat-val">${totalActs}</div><div class="stat-sub">الأنشطة المكتملة</div></div>
+`;
+
+// Subject dist
+const maxPts = Math.max(...SUBJECTS.map(s=>state.points?.[s.key]||0), 1);
+document.getElementById('subjectDist').innerHTML = SUBJECTS.map(s => {
+  const pts = state.points?.[s.key]||0;
+  const pct = Math.round(pts/50*100);
+  return `
+    <div class="subj-row">
+      <div class="subj-icon">${s.icon}</div>
+      <div class="subj-name">${s.name}</div>
+      <div class="subj-bar-wrap">
+        <div class="subj-bar"><div class="subj-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div class="subj-pts">${pts} نقطة</div>
+    </div>
+  `;
+}).join('');
+
+// Activity chart (simulated weekly)
+const days = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+const today = new Date().getDay();
+let chartHTML = '';
+days.forEach((d,i) => {
+  const isToday = i===today;
+  const hasActivity = isToday && totalActs>0;
+  const h = hasActivity ? Math.min(80,totalActs*15) : (Math.random()<0.4 ? Math.floor(Math.random()*50)+10 : 4);
+  chartHTML += `
+    <div class="chart-bar-wrap">
+      <div class="chart-bar" style="height:${h}px;background:${isToday?'var(--secondary)':'var(--primary)'};opacity:${hasActivity||i<today?1:0.3}"></div>
+      <div class="chart-label">${d.slice(0,3)}</div>
+    </div>
+  `;
+});
+document.getElementById('activityChart').innerHTML = chartHTML;
+
+// Badges
+document.getElementById('badgeList').innerHTML = ALL_BADGES.map(b => {
+  const earned = badges.includes(b.key);
+  return `
+    <div class="badge-row ${earned?'unlocked':'locked'}">
+      <span class="badge-row-icon">${b.icon}</span>
+      <span class="badge-row-name">${b.name}</span>
+      <span class="badge-row-status">${earned?'✅ مفتوح':'🔒 مقفل'}</span>
+    </div>
+  `;
+}).join('');
+</script>
+</body>
+</html>

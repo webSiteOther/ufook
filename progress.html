@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أُفُق | لوحة التقدم</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--primary:#6C3FE8;--secondary:#F7B731;--green:#26de81;--cyan:#00D2D3;--accent:#FF6B6B;--bg:#0D0B1E;--card:#16132E;--card2:#1E1A3A;--text:#F0EEFF;--muted:#8B7FC7;--border:rgba(108,63,232,0.3);}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);}
+  nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(13,11,30,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-size:1.6rem;font-weight:900;color:var(--primary);text-decoration:none;}
+  .nav-links{display:flex;gap:6px;flex-wrap:wrap;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;padding:7px 12px;border-radius:20px;transition:all 0.2s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--text);background:rgba(108,63,232,0.2);}
+  .main{padding:90px 24px 60px;max-width:1000px;margin:0 auto;}
+  .page-header{text-align:center;margin-bottom:40px;}
+  .page-header h1{font-size:2.2rem;font-weight:900;margin-bottom:6px;}
+  .page-header p{color:var(--muted);}
+  /* Top stats */
+  .top-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:32px;}
+  .stat-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px 18px;text-align:center;}
+  .stat-icon{font-size:1.8rem;margin-bottom:8px;}
+  .stat-val{font-size:1.8rem;font-weight:900;color:var(--secondary);}
+  .stat-label{font-size:0.78rem;color:var(--muted);margin-top:4px;}
+  /* Next step card */
+  .next-step{background:linear-gradient(135deg,rgba(108,63,232,0.2),rgba(0,210,211,0.1));border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:32px;}
+  .next-step h3{font-size:1.15rem;font-weight:800;margin-bottom:8px;color:var(--cyan);}
+  .next-step p{color:var(--muted);font-size:0.9rem;line-height:1.7;}
+  /* Subjects progress */
+  .section-title{font-size:1.4rem;font-weight:900;margin-bottom:20px;}
+  .subject-progress-list{display:flex;flex-direction:column;gap:14px;margin-bottom:32px;}
+  .sp-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px 24px;}
+  .sp-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .sp-icon{font-size:1.6rem;}
+  .sp-name{font-size:1rem;font-weight:700;}
+  .sp-desc{font-size:0.78rem;color:var(--muted);}
+  .sp-pct{margin-right:auto;font-size:1.2rem;font-weight:900;color:var(--secondary);}
+  .sp-bar{height:10px;background:var(--card2);border-radius:10px;overflow:hidden;margin-bottom:14px;}
+  .sp-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--primary),var(--cyan));transition:width 0.6s;}
+  .sp-details{display:flex;gap:20px;flex-wrap:wrap;}
+  .sp-det{font-size:0.78rem;color:var(--muted);}
+  .sp-det strong{color:var(--text);}
+  /* Overall progress */
+  .overall-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;margin-bottom:32px;text-align:center;}
+  .overall-circle{width:120px;height:120px;border-radius:50%;margin:16px auto;position:relative;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;color:var(--secondary);}
+  /* Quick answer */
+  .qa-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;margin-bottom:32px;}
+  .qa-card h3{font-size:1.1rem;font-weight:800;margin-bottom:8px;}
+  .qa-card p{color:var(--muted);font-size:0.88rem;margin-bottom:16px;line-height:1.6;}
+  .qa-count{font-size:1.6rem;font-weight:900;color:var(--secondary);margin-bottom:14px;}
+  .btn-qa{padding:12px 28px;background:linear-gradient(135deg,var(--primary),#8B5CF6);border:none;border-radius:12px;color:white;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:0.95rem;font-weight:700;box-shadow:0 4px 15px rgba(108,63,232,0.4);transition:all 0.2s;}
+  .btn-qa:hover{transform:translateY(-2px);}
+  /* Nav */
+  .quick-nav{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+  .quick-nav a{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:50px;padding:10px 22px;color:var(--cyan);text-decoration:none;font-size:0.88rem;font-weight:600;transition:all 0.2s;}
+  .quick-nav a:hover{border-color:var(--cyan);transform:translateY(-2px);}
+  .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--green);color:#0D0B1E;padding:14px 28px;border-radius:50px;font-weight:700;font-family:'Tajawal',sans-serif;font-size:0.95rem;opacity:0;transition:opacity 0.3s;z-index:2000;pointer-events:none;}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">أُفُق</a>
+  <div class="nav-links">
+    <a href="student.html">المواد</a>
+    <a href="progress.html" class="active">التقدم</a>
+    <a href="badges.html">الإنجازات</a>
+    <a href="parent.html">ولي الأمر</a>
+    <a href="teacher.html">ملاحظات المعلم</a>
+    <a href="login.html" id="loginLink">دخول</a>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="page-header">
+    <h1>📊 لوحة التقدم</h1>
+    <p>أين أنت الآن وما الذي ينتظرك في كل مادة</p>
+  </div>
+
+  <div class="top-stats" id="topStats"></div>
+
+  <div class="next-step" id="nextStep">
+    <h3>🎯 الخطوة التالية</h3>
+    <p id="nextStepText">...جارٍ تحميل بياناتك</p>
+  </div>
+
+  <div class="section-title">📈 التقدّم في كل مادة</div>
+  <div class="subject-progress-list" id="subjectList"></div>
+
+  <div class="overall-card">
+    <h3 class="section-title" style="margin-bottom:8px;">🌐 التقدّم نحو المستوى العام التالي</h3>
+    <div class="overall-circle" id="overallCircle">0%</div>
+    <div id="overallBar" style="height:12px;background:var(--card2);border-radius:10px;overflow:hidden;max-width:400px;margin:0 auto 12px;">
+      <div id="overallFill" style="height:100%;background:linear-gradient(90deg,var(--primary),var(--cyan));width:0%;transition:width 0.8s;border-radius:10px;"></div>
+    </div>
+    <p style="color:var(--muted);font-size:0.88rem;" id="overallDesc">اكمل أنشطة في المواد لرفع مستواك العام</p>
+  </div>
+
+  <!-- Quick Answer -->
+  <div class="qa-card">
+    <h3>⚡ تسجيل إجابة صحيحة</h3>
+    <p>أجبت على سؤال صحيح في الصف أو المنزل؟ سجّله هنا لتحديث إنجازاتك!</p>
+    <div class="qa-count" id="qaCount">0 إجابة صحيحة</div>
+    <button class="btn-qa" onclick="addCorrectAnswer()">✅ تسجيل إجابة صحيحة</button>
+  </div>
+
+  <div class="quick-nav">
+    <a href="student.html">◀ المواد الدراسية</a>
+    <a href="badges.html">◀ الإنجازات</a>
+    <a href="parent.html">◀ ولي الأمر</a>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SUBJECTS = [
+  {key:'math',icon:'🔢',name:'الرياضيات',desc:'الأعداد والعمليات الحسابية'},
+  {key:'arabic',icon:'📖',name:'اللغة العربية',desc:'القراءة والكتابة والإملاء'},
+  {key:'science',icon:'🔬',name:'العلوم',desc:'اكتشاف الطبيعة والكون'},
+  {key:'english',icon:'🌍',name:'اللغة الإنجليزية',desc:'تعلم الإنجليزية بطريقة ممتعة'},
+  {key:'art',icon:'🎨',name:'الفنون',desc:'الإبداع والتعبير الفني'},
+  {key:'islamic',icon:'⭐',name:'التربية الإسلامية',desc:'القرآن والأخلاق والقيم'},
+];
+
+function getState(){try{return JSON.parse(localStorage.getItem('ufuq_data')||'{}')}catch(e){return{}}}
+function saveState(s){localStorage.setItem('ufuq_data',JSON.stringify(s))}
+function getTotal(s){return Object.values(s.points||{}).reduce((a,b)=>a+b,0)}
+function getLevel(p){
+  if(p>=1000)return{num:5,name:'خبير'};
+  if(p>=500)return{num:4,name:'متقدم'};
+  if(p>=200)return{num:3,name:'متوسط'};
+  if(p>=50)return{num:2,name:'متمكن'};
+  return{num:1,name:'مبتدئ'};
+}
+function checkBadges(s){
+  const total=getTotal(s);const badges=[];
+  const acts=Object.values(s.activities||{}).reduce((a,b)=>a+b,0);
+  if(acts>=1)badges.push('first_step');
+  if((s.streak||0)>=3)badges.push('enthusiast');
+  if(total>=1000)badges.push('diamond');
+  if((s.points?.math||0)>=50)badges.push('math_hero');
+  if((s.points?.arabic||0)>=50)badges.push('reader');
+  if((s.points?.science||0)>=50)badges.push('scientist');
+  if((s.correctAnswers||0)>=10)badges.push('quick_mind');
+  if(Object.values(s.points||{}).every(p=>p>0))badges.push('integrated');
+  return badges;
+}
+
+let state = getState();
+if(!state.points)state.points={};
+if(!state.activities)state.activities={};
+if(!state.correctAnswers)state.correctAnswers=0;
+
+function init() {
+  const total = getTotal(state);
+  const lvl = getLevel(total);
+  const badges = checkBadges(state);
+  const totalActs = Object.values(state.activities).reduce((a,b)=>a+b,0);
+
+  // Login
+  if(state.user) document.getElementById('loginLink').textContent = '👤 ' + state.user.name;
+
+  // Top stats
+  document.getElementById('topStats').innerHTML = `
+    <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-val">${total}</div><div class="stat-label">إجمالي النقاط</div></div>
+    <div class="stat-card"><div class="stat-icon">🏅</div><div class="stat-val">المستوى ${lvl.num}</div><div class="stat-label">${lvl.name}</div></div>
+    <div class="stat-card"><div class="stat-icon">🔥</div><div class="stat-val">${state.streak||0}</div><div class="stat-label">أيام متتالية</div></div>
+    <div class="stat-card"><div class="stat-icon">🏆</div><div class="stat-val">${badges.length}/8</div><div class="stat-label">الإنجازات</div></div>
+  `;
+
+  // Next step
+  const minSub = SUBJECTS.reduce((min,s)=>(state.points[s.key]||0)<(state.points[min.key]||0)?s:min, SUBJECTS[0]);
+  document.getElementById('nextStepText').textContent = 
+    `ركّز على مادة "${minSub.name}" — نقاطك الحالية: ${state.points[minSub.key]||0} من 50. أكمل ${Math.max(0,10-(state.activities[minSub.key]||0))} أنشطة للوصول للهدف.`;
+
+  // Subjects
+  let listHTML = '';
+  SUBJECTS.forEach(sub => {
+    const pts = state.points[sub.key]||0;
+    const acts = state.activities[sub.key]||0;
+    const pct = Math.min(100,Math.round(pts/50*100));
+    const lvlSub = getLevel(pts);
+    listHTML += `
+      <div class="sp-card">
+        <div class="sp-header">
+          <div class="sp-icon">${sub.icon}</div>
+          <div><div class="sp-name">${sub.name}</div><div class="sp-desc">${sub.desc}</div></div>
+          <div class="sp-pct">${pct}%</div>
+        </div>
+        <div class="sp-bar"><div class="sp-fill" style="width:${pct}%"></div></div>
+        <div class="sp-details">
+          <div class="sp-det">الأنشطة: <strong>${acts}</strong> مكتمل</div>
+          <div class="sp-det">النقاط: <strong>${pts}</strong> من 50</div>
+          <div class="sp-det">المستوى: <strong>${lvlSub.num}/5</strong> — ${lvlSub.name}</div>
+          <div class="sp-det">المتبقي: <strong>${Math.max(0,50-pts)}</strong> نقطة للمستوى التالي</div>
+        </div>
+      </div>
+    `;
+  });
+  document.getElementById('subjectList').innerHTML = listHTML;
+
+  // Overall
+  const overallPct = Math.min(100,Math.round(total/300*100));
+  document.getElementById('overallCircle').textContent = overallPct + '%';
+  document.getElementById('overallFill').style.width = overallPct + '%';
+  document.getElementById('overallDesc').textContent = `${total} من 300 نقطة إجمالية (المستوى ${lvl.num} — ${lvl.name})`;
+
+  // QA
+  document.getElementById('qaCount').textContent = (state.correctAnswers||0) + ' إجابة صحيحة';
+}
+
+function addCorrectAnswer() {
+  state.correctAnswers = (state.correctAnswers||0) + 1;
+  const badges = checkBadges(state);
+  state.badges = badges;
+  saveState(state);
+  showToast('✅ تم تسجيل إجابة صحيحة! إجمالي: ' + state.correctAnswers);
+  init();
+}
+
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.opacity='1';
+  setTimeout(()=>t.style.opacity='0',3000);
+}
+
+init();
+</script>
+</body>
+</html>
