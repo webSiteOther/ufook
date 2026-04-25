@@ -49,6 +49,10 @@
   .toggle-switch.on{background:var(--primary);}
   .toggle-knob{width:18px;height:18px;background:white;border-radius:50%;position:absolute;top:2px;left:2px;transition:left 0.2s;}
   .toggle-switch.on .toggle-knob{left:20px;}
+  /* Video Player */
+  .video-section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:32px;}
+  .video-wrap{width:100%;border-radius:14px;overflow:hidden;border:1px solid var(--border);background:var(--card2);}
+  .video-wrap video{width:100%;display:block;outline:none;}
   /* Subjects grid */
   .subjects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;}
   .subject-card{
@@ -176,6 +180,17 @@
     <div>
       <div style="font-weight:700;font-size:0.95rem;">✨ وضع الدعم</div>
       <div style="font-size:0.8rem;color:var(--muted);">تلميحات ومساعدة إضافية لكل مادة</div>
+    </div>
+  </div>
+
+  <div class="video-section">
+    <h3 style="font-size:1.15rem;font-weight:800;margin-bottom:8px;color:var(--cyan);">🎥 مقدمة في البرمجة والمواد</h3>
+    <p style="color:var(--muted);font-size:0.9rem;margin-bottom:14px;">شاهد هذا الفيديو لتبدأ رحلتك الممتعة وتتعرف على أساسيات البرمجة للمبتدئين!</p>
+    <div class="video-wrap">
+      <video controls preload="metadata">
+        <source src="video3.mp4" type="video/mp4">
+        عذراً، متصفحك لا يدعم تشغيل الفيديو.
+      </video>
     </div>
   </div>
 
